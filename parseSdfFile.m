@@ -33,14 +33,14 @@ relPos = 0;
 
 while true
     % extract current keyword, and the rest of tokens
-    [keyword tokens] = readNextItem(f);
+    [keyword, tokens] = readNextItem(f);
     if isempty(keyword)
         break;
     end
 
     % parse the tokens depending on the keyword
     switch lower(keyword)
-        case lower('FileFormatVersion') ;
+        case lower('FileFormatVersion')
         case lower('Stack')
             stack.name = tokens{1};
             
@@ -48,7 +48,7 @@ while true
             stack.lengthUnitScale = parseValue(tokens);
         case lower('PixAspect')
             stack.pixelAspect = parseValue(tokens);
-        case lower('PixWidth') ;
+        case lower('PixWidth')
             stack.pixelWidth = parseValue(tokens);
         case lower('LastSegmentedSlice')
             stack.lastSegmentedSlice = tokens{1};
@@ -56,6 +56,8 @@ while true
             stack.lastRegisteredSlice = tokens{1};
         case lower('AbsoluteImagesPathPolicy') 
             stack.absoluteImagesPathPolicy = parseBoolean(tokens);
+        case lower('InvertZAxis') 
+            stack.InvertZAxis = parseBoolean(tokens);
  
         case lower('RelPosition')
             relPos = str2double(tokens{1});
@@ -78,7 +80,12 @@ while true
             currentSlice.relPosition = relPos;
 
             stack.slices = [stack.slices ; currentSlice];
-        
+
+        case lower('SliceSize1')
+            currentSlice.size(1) = parseValue(tokens);
+        case lower('SliceSize2')
+            currentSlice.size(2) = parseValue(tokens);
+            
         case lower('Model')
             currentModel = FreeDModel();
             currentModel.name = tokens{1};
@@ -144,8 +151,8 @@ end
 
 fclose(f);
 
-    function [keyWord tokens] = readNextItem(f)
-        % read the newt keyword and parse remaining tokens until final ';'
+    function [keyWord, tokens] = readNextItem(f)
+        % read the next keyword and parse remaining tokens until final ';'
 
         keyWord = [];
         tokens = {};
@@ -167,7 +174,7 @@ fclose(f);
         end
         wholeLine(end) = [];
         
-        [keyWord remain] = strtok(wholeLine);
+        [keyWord, remain] = strtok(wholeLine);
         
         tokens = {};
         while ~isempty(remain)
@@ -177,7 +184,7 @@ fclose(f);
                 token = remain(inds(1)+1:inds(2)-1);
                 remain = remain(inds(2)+1:end);
             else
-                [token remain] = strtok(remain); %#ok<STTOK>
+                [token, remain] = strtok(remain); %#ok<STTOK>
             end
             
             tokens = [tokens {token}]; %#ok<AGROW>
@@ -221,7 +228,7 @@ fclose(f);
         nv = length(tokens);
         data = zeros(nv, 2);
         for i = 1:nv
-            [tok1 tok2] = strtok(tokens{i}, ',');
+            [tok1, tok2] = strtok(tokens{i}, ',');
             data(i, 1) = str2double(tok1);
             data(i, 2) = str2double(tok2);
         end

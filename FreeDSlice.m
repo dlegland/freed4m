@@ -33,6 +33,9 @@ properties
     
     pixelCalibration;
     
+    % number of pixels in x and y directions, or [0 0] if not initialized
+    size = [0 0];
+    
     % a list of model items for this slice
     items = [];
     

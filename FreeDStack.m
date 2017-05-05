@@ -39,6 +39,9 @@ properties
     lastRegisteredSlice;
     absoluteImagesPathPolicy
 
+    % for display of the stack (boolean)
+    InvertZAxis = false;
+    
 % Some features not yet managed
 %     float _defaultSliceThickness; 
 %     float _defaultSliceSpacing;   //!< Espacement par défaut des coupes
