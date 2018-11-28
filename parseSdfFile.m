@@ -85,6 +85,10 @@ while true
             currentSlice.size(1) = parseValue(tokens);
         case lower('SliceSize2')
             currentSlice.size(2) = parseValue(tokens);
+        case lower('Shift')
+            currentSlice.shift = parseArray(tokens);
+        case lower('Rotate')
+            currentSlice.rotate = parseValue(tokens);
             
         case lower('Model')
             currentModel = FreeDModel();
@@ -193,10 +197,15 @@ fclose(f);
     end
 
     function value = parseValue(tokens)
+        % parses a single value, given in the first token
         value = str2double(tokens{1});
     end
 
     function rgb = parseColor(tokens)
+        % Parses a color, given as three tokens
+        %
+        % returns a 1-by-3 array of double
+        
         if length(tokens) < 3
             error('not enough tokens');
         end
@@ -207,6 +216,10 @@ fclose(f);
     end
 
     function values = parseArray(tokens)
+        % Parses an array of value, given as an array of tokens
+        %
+        % returns an array of double
+       
         nv = length(tokens);
         values = zeros(1, nv);
         for i = 1:nv
@@ -215,6 +228,10 @@ fclose(f);
     end
 
     function b = parseBoolean(tokens)
+        % Parses a boolean value, given either as 'true' or 'false' 
+        %
+        % returns a boolean.
+       
         if strcmpi(tokens{1}, 'true')
             b = true;
         elseif strcmpi(tokens{1}, 'false')
@@ -225,6 +242,8 @@ fclose(f);
     end
 
     function data = parseCoordinates(tokens)
+        % parses a coordinate array, given as space separated pairs of
+        % coordinates
         nv = length(tokens);
         data = zeros(nv, 2);
         for i = 1:nv

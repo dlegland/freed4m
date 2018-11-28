@@ -39,6 +39,10 @@ properties
     % a list of model items for this slice
     items = [];
     
+    % if registration was performed, contains two fields ROTATE and SHIFT
+    shift = [0 0];
+    rotate = 0;
+    
 end % end properties
 
 
