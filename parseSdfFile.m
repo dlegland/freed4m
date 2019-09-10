@@ -22,8 +22,8 @@ end
 
 % create the new stack;
 stack = FreeDStack();
-stack.slices = [];
-stack.models = [];
+stack.Slices = [];
+stack.Models = [];
 
 currentSlice = [];
 currentModel = [];
@@ -42,58 +42,58 @@ while true
     switch lower(keyword)
         case lower('FileFormatVersion')
         case lower('Stack')
-            stack.name = tokens{1};
+            stack.Name = tokens{1};
             
         case lower('LengthUnitScale')
-            stack.lengthUnitScale = parseValue(tokens);
+            stack.LengthUnitScale = parseValue(tokens);
         case lower('PixAspect')
-            stack.pixelAspect = parseValue(tokens);
+            stack.PixelAspect = parseValue(tokens);
         case lower('PixWidth')
-            stack.pixelWidth = parseValue(tokens);
+            stack.PixelWidth = parseValue(tokens);
         case lower('LastSegmentedSlice')
-            stack.lastSegmentedSlice = tokens{1};
+            stack.LastSegmentedSlice = tokens{1};
         case lower('LastRegisteredSlice') 
-            stack.lastRegisteredSlice = tokens{1};
+            stack.LastRegisteredSlice = tokens{1};
         case lower('AbsoluteImagesPathPolicy') 
-            stack.absoluteImagesPathPolicy = parseBoolean(tokens);
+            stack.AbsoluteImagesPathPolicy = parseBoolean(tokens);
         case lower('InvertZAxis') 
             stack.InvertZAxis = parseBoolean(tokens);
  
         case lower('RelPosition')
             relPos = str2double(tokens{1});
             if isempty(currentSlice)
-                stack.relPosition = relPos;
+                stack.RelPosition = relPos;
             else
-                currentSlice.relPosition = relPos;
+                currentSlice.RelPosition = relPos;
             end
 
         case lower('ImagesPath')
-            stack.imagesPath = tokens{1};
+            stack.ImagesPath = tokens{1};
             
         case lower('Slice')
             currentSlice = FreeDSlice();
-            currentSlice.name = tokens{1};
-            currentSlice.imageFileName = tokens{2};
+            currentSlice.Name = tokens{1};
+            currentSlice.ImageFileName = tokens{2};
             
             % chosse default position for current slice
             relPos = relPos + 1;
-            currentSlice.relPosition = relPos;
+            currentSlice.RelPosition = relPos;
 
-            stack.slices = [stack.slices ; currentSlice];
+            stack.Slices = [stack.Slices ; currentSlice];
 
         case lower('SliceSize1')
-            currentSlice.size(1) = parseValue(tokens);
+            currentSlice.Size(1) = parseValue(tokens);
         case lower('SliceSize2')
-            currentSlice.size(2) = parseValue(tokens);
+            currentSlice.Size(2) = parseValue(tokens);
         case lower('Shift')
-            currentSlice.shift = parseArray(tokens);
+            currentSlice.Shift = parseArray(tokens);
         case lower('Rotate')
-            currentSlice.rotate = parseValue(tokens);
+            currentSlice.Rotate = parseValue(tokens);
             
         case lower('Model')
             currentModel = FreeDModel();
-            currentModel.name = tokens{1};
-            stack.models = [stack.models ; currentModel];
+            currentModel.Name = tokens{1};
+            stack.Models = [stack.Models ; currentModel];
             
         case lower('ModelItem')
             model = getModel(stack, tokens{1});
@@ -103,47 +103,47 @@ while true
             
         case lower('ModelItemData')
             data = parseCoordinates(tokens);
-            currentModelItem.data = data;
+            currentModelItem.Data = data;
 
             
         case lower('Annotation')
 
             
         case lower('Brilliancy')
-            currentModel.brilliancy = parseValue(tokens);
+            currentModel.Brilliancy = parseValue(tokens);
             
         case lower('Color')
-            currentModel.color = parseColor(tokens);
+            currentModel.Color = parseColor(tokens);
 
         case lower('EcoRendering')
-            currentModel.ecoRendering = parseBoolean(tokens);
+            currentModel.EcoRendering = parseBoolean(tokens);
 
         case lower('FilledIn')
-            currentModel.filledIn = parseBoolean(tokens);
+            currentModel.FilledIn = parseBoolean(tokens);
 
         case lower('Hidden3d')
-            currentModel.hidden3d = parseBoolean(tokens);
+            currentModel.Hidden3d = parseBoolean(tokens);
 
         case lower('PointSize')
-            currentModel.pointSize = parseValue(tokens);
+            currentModel.PointSize = parseValue(tokens);
 
         case lower('Primitive')
-            currentModel.primitive = tokens{1};
+            currentModel.Primitive = tokens{1};
 
         case lower('RenderingMode')
-            currentModel.renderingMode = tokens{1};
+            currentModel.RenderingMode = tokens{1};
 
         case lower('Resampling')
-            currentModel.resampling = parseArray(tokens);
+            currentModel.Resampling = parseArray(tokens);
 
         case lower('Thickness')
-            currentModel.thickness = parseValue(tokens);
+            currentModel.Thickness = parseValue(tokens);
 
         case lower('Transparency')
-            currentModel.transparency = parseValue(tokens);
+            currentModel.Transparency = parseValue(tokens);
 
         case lower('VertexSymbol')
-            currentModel.vertexSymbol = tokens{1};
+            currentModel.VertexSymbol = tokens{1};
 
 
         otherwise

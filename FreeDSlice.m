@@ -1,5 +1,5 @@
 classdef FreeDSlice < handle
-%FREEDSLICE  One-line description here, please.
+% A Slice in a Free-D stack model.
 %
 %   Class FreeDSlice
 %
@@ -7,11 +7,12 @@ classdef FreeDSlice < handle
 %   FreeDSlice
 %
 %   See also
+%     FreeDStack, FreeDModel
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2014-03-16,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2014 INRA - Cepia Software Platform.
 
@@ -19,36 +20,36 @@ classdef FreeDSlice < handle
 %% Properties
 properties
     % the name of the slice
-    name;
+    Name;
     
     % the name of the file that contains the image
-    imageFileName;
+    ImageFileName;
     
     % an instance of image
-    image;
+    Image;
     
-    relPosition;
+    RelPosition;
     
-    annotation;
+    Annotation;
     
-    pixelCalibration;
+    PixelCalibration;
     
     % number of pixels in x and y directions, or [0 0] if not initialized
-    size = [0 0];
+    Size = [0 0];
     
-    % a list of model items for this slice
-    items = [];
+    % a list of model items for obj slice
+    Items = [];
     
     % if registration was performed, contains two fields ROTATE and SHIFT
-    shift = [0 0];
-    rotate = 0;
+    Shift = [0 0];
+    Rotate = 0;
     
 end % end properties
 
 
 %% Constructor
 methods
-    function this = FreeDSlice(varargin)
+    function obj = FreeDSlice(varargin)
     % Constructor for FreeDSlice class
 
     end
@@ -58,11 +59,11 @@ end % end constructors
 
 %% Model items management
 methods
-    function addItem(this, item)
+    function addItem(obj, item)
         if ~isa(item, 'FreeDModelItem')
             error('item must be an instance of FreeDModelItem');
         end
-        this.items = [this.items item];
+        obj.Items = [obj.Items item];
     end
     
 end % end methods

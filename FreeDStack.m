@@ -1,5 +1,5 @@
 classdef FreeDStack < handle
-%FREEDSTACK A stack object as managed by the Free-D software
+% A stack object as managed by the Free-D software.
 %
 %   Class FreeDStack
 %
@@ -18,26 +18,26 @@ classdef FreeDStack < handle
 
 %% Properties
 properties
-    % the name of  this stack
-    name;
+    % the name of  obj stack
+    Name;
 
     % the set of slices
-    slices;
+    Slices;
     
     % the set of models
-    models;
+    Models;
     
-    annotation;
+    Annotation;
 
-    imagesPath;
+    ImagesPath;
 
-    lengthUnitScale = 0;
-    pixelAspect = 1;
-    pixelWidth = 1;
-    relPosition = 1;
-    lastSegmentedSlice;
-    lastRegisteredSlice;
-    absoluteImagesPathPolicy
+    LengthUnitScale = 0;
+    PixelAspect = 1;
+    PixelWidth = 1;
+    RelPosition = 1;
+    LastSegmentedSlice;
+    LastRegisteredSlice;
+    AbsoluteImagesPathPolicy
 
     % for display of the stack (boolean)
     InvertZAxis = false;
@@ -53,7 +53,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = FreeDStack(varargin)
+    function obj = FreeDStack(varargin)
     % Constructor for FreeDStack class
 
     end
@@ -63,28 +63,28 @@ end % end constructors
 
 %% Methods
 methods
-    function slice = getSlice(this, sliceName)
+    function slice = getSlice(obj, sliceName)
         % Returns a slice in the stack from its name
-        for i = 1:length(this.slices)
-            if strcmp(sliceName, this.slices(i).name)
-                slice = this.slices(i);
+        for i = 1:length(obj.Slices)
+            if strcmp(sliceName, obj.Slices(i).Name)
+                slice = obj.Slices(i);
                 return;
             end
         end
         error('Stack "%s" does not contain any slice with name "%d"', ...
-            this.name, sliceName);
+            obj.Name, sliceName);
     end
     
-    function model = getModel(this, modelName)
+    function model = getModel(obj, modelName)
         % Returns a model in the stack from its name
-        for i = 1:length(this.models)
-            if strcmp(modelName, this.models(i).name)
-                model = this.models(i);
+        for i = 1:length(obj.Models)
+            if strcmp(modelName, obj.Models(i).Name)
+                model = obj.Models(i);
                 return;
             end
         end
         error('Stack "%s" does not contain any model with name "%d"', ...
-            this.name, modelName);
+            obj.Name, modelName);
     end
     
 end % end methods
