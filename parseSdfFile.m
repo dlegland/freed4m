@@ -40,6 +40,9 @@ while true
 
     % parse the tokens depending on the keyword
     switch lower(keyword)
+        
+        % Stack keywords
+        
         case lower('FileFormatVersion')
         case lower('Stack')
             stack.Name = tokens{1};
@@ -69,7 +72,10 @@ while true
 
         case lower('ImagesPath')
             stack.ImagesPath = tokens{1};
+        
             
+        % Slice keywords
+
         case lower('Slice')
             currentSlice = FreeDSlice();
             currentSlice.Name = tokens{1};
@@ -90,24 +96,13 @@ while true
         case lower('Rotate')
             currentSlice.Rotate = parseValue(tokens);
             
+        % model keywords
+
         case lower('Model')
             currentModel = FreeDModel();
             currentModel.Name = tokens{1};
             stack.Models = [stack.Models ; currentModel];
             
-        case lower('ModelItem')
-            model = getModel(stack, tokens{1});
-            slice = getSlice(stack, tokens{2});
-           	currentModelItem = FreeDModelItem(model, slice);
-            
-            
-        case lower('ModelItemData')
-            data = parseCoordinates(tokens);
-            currentModelItem.Data = data;
-
-            
-        case lower('Annotation')
-
             
         case lower('Brilliancy')
             currentModel.Brilliancy = parseValue(tokens);
@@ -136,6 +131,12 @@ while true
         case lower('Resampling')
             currentModel.Resampling = parseArray(tokens);
 
+        case lower('MeshVertexSmoothing')
+            currentModel.MeshVertexSmoothing = parseValue(tokens);
+
+        case lower('MeshNormalSmoothing')
+            currentModel.MeshNormalSmoothing = parseValue(tokens);
+
         case lower('Thickness')
             currentModel.Thickness = parseValue(tokens);
 
@@ -144,6 +145,28 @@ while true
 
         case lower('VertexSymbol')
             currentModel.VertexSymbol = tokens{1};
+
+        case lower('BeginCap')
+            currentModel.BeginCap = parseBoolean(tokens);
+
+        case lower('EndCap')
+            currentModel.EndCap = parseBoolean(tokens);
+
+            
+        % Model Item keywords
+
+        case lower('ModelItem')
+            model = getModel(stack, tokens{1});
+            slice = getSlice(stack, tokens{2});
+           	currentModelItem = FreeDModelItem(model, slice);
+            
+            
+        case lower('ModelItemData')
+            data = parseCoordinates(tokens);
+            currentModelItem.Data = data;
+
+            
+        case lower('Annotation')
 
 
         otherwise

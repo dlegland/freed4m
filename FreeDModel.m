@@ -7,7 +7,7 @@ classdef FreeDModel < handle
 %   FreeDModel
 %
 %   See also
-%     FreeDStack
+%     FreeDStack, FreeDModelItem
 %
 
 % ------
@@ -33,9 +33,14 @@ properties
     Primitive = 'polyline';
     RenderingMode = 'curve';
     Resampling  = [100 100];
+    MeshVertexSmoothing = 0;
+    MeshNormalSmoothing = 0;
     Thickness = 1;
     Transparency = 255;
     VertexSymbol = 'sphere';
+    BeginCap = false;
+    EndCap = false;
+    
 end % end properties
 
 
