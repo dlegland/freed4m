@@ -11,7 +11,7 @@ function stack = parseSdfFile(fileName)
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2014-03-16,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2014 INRA - Cepia Software Platform.
 
@@ -73,6 +73,9 @@ while true
         case lower('ImagesPath')
             stack.ImagesPath = tokens{1};
         
+        case lower('Annotation')
+            stack.Annotation = tokens{1};
+
             
         % Slice keywords
 
@@ -81,9 +84,21 @@ while true
             currentSlice.Name = tokens{1};
             currentSlice.ImageFileName = tokens{2};
             
-            % chosse default position for current slice
+            % choose default position for current slice
             relPos = relPos + 1;
             currentSlice.RelPosition = relPos;
+
+            stack.Slices = [stack.Slices ; currentSlice];
+
+        case lower('StackSlice')
+            currentSlice = FreeDStackSlice();
+            currentSlice.Name = tokens{1};
+            currentSlice.ImageFileName = tokens{2};
+            pos = parseValue(tokens(3));
+            currentSlice.SliceIndex = pos;
+            
+            % choose default position for current slice
+            currentSlice.RelPosition = pos;
 
             stack.Slices = [stack.Slices ; currentSlice];
 
@@ -166,9 +181,6 @@ while true
             currentModelItem.Data = data;
 
             
-        case lower('Annotation')
-
-
         otherwise
             warning('freed:parseSdfFile', ...
                 ['Unknown SDF Stack token: ' keyword]);
